@@ -38,5 +38,36 @@ result = result && putExtraOrFail(...)
 This tiny Canary class is a fun and useful way to detect failures across many function
 calls that need to persist state and only die (fail) once yet continue to run.
 
-![canary](screenshots/canary.png)
+```java
+private class Canary {
+  boolean alive = true;
+}
+
+private boolean validateInput(Intent intent) {
+  Canary canary = new Canary();
+
+  // put extra for every single text field so their errors are set too
+  putExtraOrFail(intent, R.id.adjective1_edittext, ResultActivity.ADJECTIVE1, canary);
+  putExtraOrFail(intent, R.id.adjective2_edittext, ResultActivity.ADJECTIVE2, canary);
+  putExtraOrFail(intent, R.id.noun1_edittext, ResultActivity.NOUN1, canary);
+  putExtraOrFail(intent, R.id.noun2_edittext, ResultActivity.NOUN2, canary);
+  putExtraOrFail(intent, R.id.animals_edittext, ResultActivity.ANIMALS, canary);
+  putExtraOrFail(intent, R.id.game_edittext, ResultActivity.GAME, canary);
+
+  return canary.alive;
+}
+
+private void putExtraOrFail(Intent intent, int viewId, String messageId, Canary canary) {
+  EditText editText = (EditText) findViewById(viewId);
+  String text = editText.getText().toString();
+
+  if (text.length() > 0) {
+    intent.putExtra(messageId, text);
+  } else  {
+    editText.setError("Field must not be empty.");
+    intent.putExtra("canary", false);
+    canary.alive = false;
+  }
+}
+```
 

@@ -8,11 +8,11 @@ and the like (you know) for a Mad Libs game. The first activity passes on the
 collection of words to a second activity that displays them in a classic Mad Libs
 hilarity.
 
-!(finished Mad Lib)[screenshots/mad-lib.png]
+![finished Mad Lib](screenshots/mad-lib.png)
 
 Each EditText field shows an error if the user doesn't fill it out.
 
-!(error checking)[screenshots/errors.png]
+![error checking](screenshots/errors.png)
 
 It was fun creating a tiny one-time private `Canary` class used to pass into a function
 to detect failures. The canary only has a boolean `alive` property that can be set to false.
@@ -38,4 +38,5 @@ result = result && putExtraOrFail(...)
 This tiny Canary class is a fun and useful way to detect failures across many function
 calls that need to persist state and only die (fail) once yet continue to run.
 
-!(canary)[screenshots/canary.png]
+![canary](screenshots/canary.png)
+
